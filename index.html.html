@@ -1,0 +1,1776 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Know Your Housing</title>
+
+
+<style>
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+
+    margin: 0;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: #f3f6f8;
+
+    color: #17324d;
+
+}
+
+
+/* =========================================================
+   GAME CONTAINER
+========================================================= */
+
+.game {
+
+    width: 95%;
+
+    max-width: 1150px;
+
+    min-height: 720px;
+
+    margin: 30px auto;
+
+    background: white;
+
+    border-radius: 28px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.15);
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+header {
+
+    background: #17324d;
+
+    color: white;
+
+    padding: 28px 45px;
+
+}
+
+header h1 {
+
+    margin: 0;
+
+    font-size: 32px;
+
+}
+
+header p {
+
+    margin: 7px 0 0;
+
+    color: #dce8f0;
+
+    font-size: 16px;
+
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+main {
+
+    padding: 50px;
+
+}
+
+.screen {
+
+    display: none;
+
+}
+
+.screen.active {
+
+    display: block;
+
+}
+
+
+/* =========================================================
+   CATEGORY SCREEN
+   ONLY ICONS — NO WORDS
+========================================================= */
+
+.categories {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 30px;
+
+    min-height: 500px;
+
+    align-items: center;
+
+}
+
+
+.category {
+
+    border: none;
+
+    height: 350px;
+
+    border-radius: 28px;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+
+}
+
+
+.category:hover {
+
+    transform:
+        translateY(-8px);
+
+    box-shadow:
+        0 15px 30px rgba(0,0,0,0.18);
+
+}
+
+
+.category:active {
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+.who {
+
+    background: #2f80c0;
+
+}
+
+
+.what {
+
+    background: #2aa89b;
+
+}
+
+
+.where {
+
+    background: #dda52f;
+
+}
+
+
+.icon {
+
+    font-size: 105px;
+
+    line-height: 1;
+
+}
+
+
+/* =========================================================
+   QUESTION SCREEN
+========================================================= */
+
+.question-container {
+
+    max-width: 950px;
+
+    margin: auto;
+
+}
+
+
+.back {
+
+    border: none;
+
+    background: none;
+
+    color: #6d7d89;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    padding: 0;
+
+    margin-bottom: 20px;
+
+}
+
+
+.back:hover {
+
+    color: #17324d;
+
+}
+
+
+.category-label {
+
+    display: inline-block;
+
+    padding: 10px 18px;
+
+    border-radius: 25px;
+
+    background: #edf3f7;
+
+    color: #17324d;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    margin-bottom: 20px;
+
+}
+
+
+/* =========================================================
+   QUESTION CARD
+========================================================= */
+
+.question-card {
+
+    background: #f8fafb;
+
+    border:
+        2px solid #e1e8ed;
+
+    border-radius: 24px;
+
+    padding: 40px;
+
+}
+
+
+.question-card h2 {
+
+    font-size: 30px;
+
+    line-height: 1.4;
+
+    margin:
+        0 0 30px;
+
+    color: #17324d;
+
+}
+
+
+/* =========================================================
+   ANSWERS
+========================================================= */
+
+.answers {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 16px;
+
+}
+
+
+.answer {
+
+    background: white;
+
+    border:
+        2px solid #dce5ea;
+
+    border-radius: 16px;
+
+    padding: 22px;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    line-height: 1.45;
+
+}
+
+
+.letter {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 38px;
+
+    height: 38px;
+
+    margin-right: 10px;
+
+    border-radius: 10px;
+
+    background: #edf3f7;
+
+    color: #17324d;
+
+    font-weight: bold;
+
+}
+
+
+/* =========================================================
+   CORRECT ANSWER
+========================================================= */
+
+.answer.correct {
+
+    background: #e7f7f3;
+
+    border-color: #2aa89b;
+
+}
+
+
+.answer.correct .letter {
+
+    background: #2aa89b;
+
+    color: white;
+
+}
+
+
+/* =========================================================
+   REVEAL BUTTON
+========================================================= */
+
+.reveal {
+
+    width: 100%;
+
+    margin-top: 25px;
+
+    padding: 20px;
+
+    border: none;
+
+    border-radius: 16px;
+
+    background: #17324d;
+
+    color: white;
+
+    font-size: 19px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+}
+
+
+.reveal:hover {
+
+    background: #254b6c;
+
+}
+
+
+/* =========================================================
+   EXPLANATION
+========================================================= */
+
+.explanation {
+
+    display: none;
+
+    margin-top: 22px;
+
+    padding: 22px;
+
+    background: #fff5d8;
+
+    border-left:
+        6px solid #dda52f;
+
+    border-radius: 12px;
+
+    line-height: 1.55;
+
+}
+
+
+.explanation.show {
+
+    display: block;
+
+}
+
+
+.explanation strong {
+
+    color: #77570e;
+
+    font-size: 18px;
+
+}
+
+
+/* =========================================================
+   NEXT STUDENT
+========================================================= */
+
+.next {
+
+    display: none;
+
+    width: 100%;
+
+    margin-top: 22px;
+
+    padding: 20px;
+
+    border: none;
+
+    border-radius: 16px;
+
+    background: #2aa89b;
+
+    color: white;
+
+    font-size: 19px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+}
+
+
+.next:hover {
+
+    background: #218b80;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 850px) {
+
+    main {
+
+        padding: 30px;
+
+    }
+
+
+    .categories {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .category {
+
+        height: 200px;
+
+    }
+
+
+    .answers {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="game">
+
+
+<!-- =======================================================
+     HEADER
+======================================================= -->
+
+<header>
+
+<h1>🏠 Know Your Housing</h1>
+
+<p>
+Learn about off-campus housing support, one question at a time.
+</p>
+
+</header>
+
+
+
+<main>
+
+
+<!-- =======================================================
+     CATEGORY SCREEN
+     
+     IMPORTANT:
+     The physical wheel determines the category.
+     The digital screen ONLY shows the three icons.
+======================================================= -->
+
+<section
+    id="home"
+    class="screen active"
+>
+
+
+<div class="categories">
+
+
+<!-- WHO WE ARE -->
+
+<button
+    class="category who"
+    onclick="startGame('who')"
+>
+
+<div class="icon">
+
+👥
+
+</div>
+
+</button>
+
+
+
+<!-- WHAT WE DO -->
+
+<button
+    class="category what"
+    onclick="startGame('what')"
+>
+
+<div class="icon">
+
+🏠
+
+</div>
+
+</button>
+
+
+
+<!-- WHERE WE ARE LOCATED -->
+
+<button
+    class="category where"
+    onclick="startGame('where')"
+>
+
+<div class="icon">
+
+📍
+
+</div>
+
+</button>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =======================================================
+     QUESTION SCREEN
+======================================================= -->
+
+<section
+    id="questionScreen"
+    class="screen"
+>
+
+
+<div class="question-container">
+
+
+<button
+    class="back"
+    onclick="goHome()"
+>
+
+← Back to categories
+
+</button>
+
+
+
+<div
+    id="categoryLabel"
+    class="category-label"
+>
+
+CATEGORY
+
+</div>
+
+
+
+<div class="question-card">
+
+
+<h2
+    id="questionText"
+>
+
+Question
+
+</h2>
+
+
+
+<div
+    id="answers"
+    class="answers"
+>
+
+</div>
+
+
+
+<button
+    id="revealButton"
+    class="reveal"
+    onclick="revealAnswer()"
+>
+
+REVEAL ANSWER
+
+</button>
+
+
+
+<div
+    id="explanation"
+    class="explanation"
+>
+
+
+<strong
+    id="correctAnswer"
+>
+
+✓ Correct Answer
+
+</strong>
+
+
+<p
+    id="explanationText"
+>
+
+Explanation
+
+</p>
+
+
+</div>
+
+
+
+<button
+    id="nextButton"
+    class="next"
+    onclick="goHome()"
+>
+
+NEXT STUDENT →
+
+</button>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+</main>
+
+</div>
+
+
+
+<script>
+
+
+/* =========================================================
+   QUESTION BANK
+========================================================= */
+
+const questions = {
+
+
+/* =========================================================
+   WHO WE ARE — 10 QUESTIONS
+========================================================= */
+
+who: [
+
+{
+
+question:
+"Which best describes who the off-campus housing team is?",
+
+answers: [
+
+"A landlord for students",
+
+"A team that supports students with housing-related questions, needs and resources",
+
+"A residence management team",
+
+"A rental company"
+
+],
+
+correct: 1,
+
+explanation:
+"The off-campus housing team supports students with housing-related questions, needs, concerns, and resources. We are not a landlord, residence management team, or rental company."
+
+},
+
+
+{
+
+question:
+"Who is the off-campus housing team here to help?",
+
+answers: [
+
+"Only students who are houseless",
+
+"Only students looking for a new place to live",
+
+"Students with housing questions, concerns or needs",
+
+"Only first-year students"
+
+],
+
+correct: 2,
+
+explanation:
+"The off-campus housing team is here to support students who have housing questions, concerns, or needs. You do not have to be experiencing a housing crisis to reach out."
+
+},
+
+
+{
+
+question:
+"True or false: You have to be experiencing a housing crisis to contact the off-campus housing team.",
+
+answers: [
+
+"True",
+
+"False"
+
+],
+
+correct: 1,
+
+explanation:
+"False! Students can contact the off-campus housing team with housing questions, concerns, or needs. You do not have to wait until your situation becomes a crisis."
+
+},
+
+
+{
+
+question:
+"What is one of our main goals as the off-campus housing team?",
+
+answers: [
+
+"To help students navigate housing",
+
+"To match students with roommates",
+
+"To manage on-campus residence",
+
+"To rent apartments to students"
+
+],
+
+correct: 0,
+
+explanation:
+"One of our main goals is to help students navigate housing and connect them with appropriate information and resources."
+
+},
+
+
+{
+
+question:
+"True or false: Off-campus housing is a place students can go when they aren't sure where to start with a housing concern.",
+
+answers: [
+
+"True",
+
+"False"
+
+],
+
+correct: 0,
+
+explanation:
+"True! Students can reach out to the off-campus housing team when they are unsure where to start with a housing concern."
+
+},
+
+
+{
+
+question:
+"A student is unsure whether or not the off-campus housing team can help with their housing concern. What should they do?",
+
+answers: [
+
+"Work it out alone",
+
+"Wait until it becomes a housing crisis",
+
+"Reach out and ask",
+
+"Ask their landlord"
+
+],
+
+correct: 2,
+
+explanation:
+"The best option is to reach out and ask! If you're unsure whether the team can help, it is always okay to contact them and find out."
+
+},
+
+
+{
+
+question:
+"Complete the sentence: The off-campus housing team is here to help students ______ housing.",
+
+answers: [
+
+"Avoid",
+
+"Rent",
+
+"Navigate",
+
+"Ignore"
+
+],
+
+correct: 2,
+
+explanation:
+"The off-campus housing team is here to help students navigate housing situations, options, questions, and resources."
+
+},
+
+
+{
+
+question:
+"Which of the following is NOT who the off-campus housing team is?",
+
+answers: [
+
+"A resource for students",
+
+"A support for housing-related needs",
+
+"A place where students can ask housing-related questions",
+
+"A landlord"
+
+],
+
+correct: 3,
+
+explanation:
+"The off-campus housing team is not a landlord. We provide support, information, and resources to help students navigate their housing situations."
+
+},
+
+
+{
+
+question:
+"Which statement best describes the off-campus housing team?",
+
+answers: [
+
+"We tell students where to live",
+
+"We rent apartments to students",
+
+"We help students navigate housing-related situations",
+
+"We assign students to landlords"
+
+],
+
+correct: 2,
+
+explanation:
+"We help students navigate housing-related situations by providing information, education, and connections to appropriate resources."
+
+},
+
+
+{
+
+question:
+"What does 'off-campus housing' refer to?",
+
+answers: [
+
+"On-campus residence support",
+
+"Housing support related to living outside the college residence",
+
+"Assigning students to on-campus roommates",
+
+"Housing provided directly by the college"
+
+],
+
+correct: 1,
+
+explanation:
+"Off-campus housing refers to housing and housing support related to living outside of college residence."
+
+}
+
+],
+
+
+
+/* =========================================================
+   WHAT WE DO — 10 QUESTIONS
+========================================================= */
+
+what: [
+
+{
+
+question:
+"What can the off-campus housing team help students with?",
+
+answers: [
+
+"Housing-related questions and concerns",
+
+"Connecting students with housing resources",
+
+"Navigating housing situations",
+
+"All of the above"
+
+],
+
+correct: 3,
+
+explanation:
+"The off-campus housing team can help students with housing-related questions and concerns, connect them with housing resources, help them navigate housing situations, and help them understand their tenant rights."
+
+},
+
+
+{
+
+question:
+"A student is looking for a place to live off-campus. What can they do?",
+
+answers: [
+
+"Ask only their friends for advice",
+
+"Contact on-campus residence",
+
+"Reach out to the off-campus housing team",
+
+"Wait until they have already found a place"
+
+],
+
+correct: 2,
+
+explanation:
+"Students can reach out to the off-campus housing team for advice, information, and resources when looking for off-campus housing."
+
+},
+
+
+{
+
+question:
+"True or false: The off-campus housing team can help students navigate their housing options.",
+
+answers: [
+
+"True",
+
+"False"
+
+],
+
+correct: 0,
+
+explanation:
+"True! The off-campus housing team can help students navigate their housing options and connect them with appropriate housing information and resources."
+
+},
+
+
+{
+
+question:
+"True or false: The off-campus housing team can help students understand their rights as a tenant.",
+
+answers: [
+
+"True",
+
+"False"
+
+],
+
+correct: 0,
+
+explanation:
+"True! The off-campus housing team can educate students about their rights and responsibilities as tenants."
+
+},
+
+
+{
+
+question:
+"Which of the following is something the off-campus housing team can help connect students with?",
+
+answers: [
+
+"Housing resources",
+
+"Community resources",
+
+"Housing information",
+
+"All of the above"
+
+],
+
+correct: 3,
+
+explanation:
+"The off-campus housing team can help connect students with housing resources, community resources, and housing information."
+
+},
+
+
+{
+
+question:
+"A student doesn't know where to start when looking for off-campus housing. What can the off-campus housing team help them with?",
+
+answers: [
+
+"Choosing an apartment for them",
+
+"Connecting them to the appropriate resources",
+
+"Signing a lease on their behalf",
+
+"Paying their rent"
+
+],
+
+correct: 1,
+
+explanation:
+"The off-campus housing team can help students identify and connect with appropriate resources. They do not make housing decisions or sign leases on behalf of students."
+
+},
+
+
+{
+
+question:
+"True or false: If a student has not found a place to live yet, they can still contact the off-campus housing team for advice and/or resources.",
+
+answers: [
+
+"True",
+
+"False"
+
+],
+
+correct: 0,
+
+explanation:
+"True! Students do not need to already have housing before contacting the off-campus housing team. They can reach out for advice and resources while they are searching."
+
+},
+
+
+{
+
+question:
+"A student is unsure about their rights as a tenant and has questions. How can the off-campus housing team assist them?",
+
+answers: [
+
+"Make decisions for them",
+
+"Educate them on their rights",
+
+"Act as their landlord",
+
+"Sign a lease for them"
+
+],
+
+correct: 1,
+
+explanation:
+"The off-campus housing team can educate students about their tenant rights and provide information to help them make informed decisions."
+
+},
+
+
+{
+
+question:
+"A student receives a document from their landlord that they don't understand. In what way can the off-campus housing team help them?",
+
+answers: [
+
+"Contact the student's landlord without their knowledge",
+
+"Advise the student to ignore it",
+
+"Advise the student to immediately break their lease",
+
+"Help the student understand the document"
+
+],
+
+correct: 3,
+
+explanation:
+"The off-campus housing team can help students understand housing-related information and documents so they can better understand their situation and options."
+
+},
+
+
+{
+
+question:
+"True or false: The off-campus housing team can explain students' rights as a tenant without making any decisions for them.",
+
+answers: [
+
+"True",
+
+"False"
+
+],
+
+correct: 0,
+
+explanation:
+"True! The team can provide information and education about tenant rights while allowing students to make their own decisions about their housing situation."
+
+}
+
+],
+
+
+
+/* =========================================================
+   WHERE WE ARE LOCATED — 6 QUESTIONS
+========================================================= */
+
+where: [
+
+{
+
+question:
+"Which campus is the off-campus housing team located on?",
+
+answers: [
+
+"Barrie campus",
+
+"Midland campus",
+
+"Owen Sound campus",
+
+"Orillia campus"
+
+],
+
+correct: 0,
+
+explanation:
+"The off-campus housing team is located at the Barrie campus."
+
+},
+
+
+{
+
+question:
+"Which building can you find the off-campus housing office in?",
+
+answers: [
+
+"K",
+
+"C",
+
+"M",
+
+"D"
+
+],
+
+correct: 1,
+
+explanation:
+"The off-campus housing office is located in the C building."
+
+},
+
+
+{
+
+question:
+"True or false: Students can visit the off-campus housing team in person.",
+
+answers: [
+
+"True",
+
+"False"
+
+],
+
+correct: 0,
+
+explanation:
+"True! Students can visit the off-campus housing team in person at C103."
+
+},
+
+
+{
+
+question:
+"Which of the following is a way for students to contact the off-campus housing team?",
+
+answers: [
+
+"In person",
+
+"Via email",
+
+"Via phone",
+
+"All of the above"
+
+],
+
+correct: 3,
+
+explanation:
+"Students can contact the off-campus housing team in person, via email, or via phone."
+
+},
+
+
+{
+
+question:
+"True or false: Students can access the contact information for the off-campus housing team on the Georgian College website.",
+
+answers: [
+
+"True",
+
+"False"
+
+],
+
+correct: 0,
+
+explanation:
+"True! Students can find contact information for the off-campus housing team through the Georgian College website."
+
+},
+
+
+{
+
+question:
+"True or false: Students HAVE to visit the off-campus housing team in person.",
+
+answers: [
+
+"True",
+
+"False"
+
+],
+
+correct: 1,
+
+explanation:
+"False! Students do not have to visit in person. They can also contact the off-campus housing team by email at Housing@georgiancollege.ca."
+
+}
+
+]
+
+};
+
+
+
+/* =========================================================
+   SHUFFLE FUNCTION
+========================================================= */
+
+function shuffle(array) {
+
+    const newArray = [...array];
+
+
+    for (
+        let i = newArray.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const randomIndex =
+            Math.floor(
+                Math.random() * (i + 1)
+            );
+
+
+        const temp =
+            newArray[i];
+
+
+        newArray[i] =
+            newArray[randomIndex];
+
+
+        newArray[randomIndex] =
+            temp;
+
+    }
+
+
+    return newArray;
+
+}
+
+
+
+/* =========================================================
+   QUESTION DECKS
+========================================================= */
+
+let questionDecks = {
+
+    who:
+        shuffle(questions.who),
+
+    what:
+        shuffle(questions.what),
+
+    where:
+        shuffle(questions.where)
+
+};
+
+
+
+/* =========================================================
+   CURRENT QUESTION
+========================================================= */
+
+let currentQuestion = null;
+
+
+
+/* =========================================================
+   START GAME
+========================================================= */
+
+function startGame(category) {
+
+
+    /*
+       If every question has been used,
+       make a new shuffled deck.
+    */
+
+    if (
+        questionDecks[category].length === 0
+    ) {
+
+        questionDecks[category] =
+            shuffle(
+                questions[category]
+            );
+
+    }
+
+
+
+    /*
+       Remove ONE question from the deck.
+    */
+
+    currentQuestion =
+        questionDecks[category].pop();
+
+
+
+    /* =====================================================
+       SHOW QUESTION SCREEN
+    ===================================================== */
+
+    document
+        .getElementById("home")
+        .classList
+        .remove("active");
+
+
+    document
+        .getElementById("questionScreen")
+        .classList
+        .add("active");
+
+
+
+    /* =====================================================
+       CATEGORY LABEL
+    ===================================================== */
+
+    const categoryNames = {
+
+        who:
+            "👥 WHO WE ARE",
+
+        what:
+            "🏠 WHAT WE DO",
+
+        where:
+            "📍 WHERE WE ARE LOCATED"
+
+    };
+
+
+    document
+        .getElementById("categoryLabel")
+        .textContent =
+        categoryNames[category];
+
+
+
+    /* =====================================================
+       QUESTION
+    ===================================================== */
+
+    document
+        .getElementById("questionText")
+        .textContent =
+        currentQuestion.question;
+
+
+
+    /* =====================================================
+       ANSWERS
+    ===================================================== */
+
+    const answers =
+        document
+            .getElementById("answers");
+
+
+    answers.innerHTML = "";
+
+
+
+    currentQuestion.answers.forEach(
+
+        function(answer, index) {
+
+
+            const answerBox =
+                document.createElement("div");
+
+
+            answerBox.className =
+                "answer";
+
+
+            const letter =
+                String.fromCharCode(
+                    65 + index
+                );
+
+
+            answerBox.innerHTML = `
+
+                <span class="letter">
+                    ${letter}
+                </span>
+
+                ${answer}
+
+            `;
+
+
+            answers.appendChild(
+                answerBox
+            );
+
+        }
+
+    );
+
+
+
+    /* =====================================================
+       RESET REVEAL
+    ===================================================== */
+
+    document
+        .getElementById("explanation")
+        .classList
+        .remove("show");
+
+
+    document
+        .getElementById("revealButton")
+        .style
+        .display =
+        "block";
+
+
+    document
+        .getElementById("nextButton")
+        .style
+        .display =
+        "none";
+
+}
+
+
+
+/* =========================================================
+   REVEAL ANSWER
+========================================================= */
+
+function revealAnswer() {
+
+
+    if (!currentQuestion) {
+
+        return;
+
+    }
+
+
+    const answerBoxes =
+        document.querySelectorAll(
+            ".answer"
+        );
+
+
+
+    /* Highlight correct answer */
+
+    if (
+        answerBoxes[
+            currentQuestion.correct
+        ]
+    ) {
+
+        answerBoxes[
+            currentQuestion.correct
+        ]
+        .classList
+        .add("correct");
+
+    }
+
+
+
+    /* Correct answer letter */
+
+    const correctLetter =
+        String.fromCharCode(
+            65 +
+            currentQuestion.correct
+        );
+
+
+    document
+        .getElementById("correctAnswer")
+        .textContent =
+        "✓ Correct Answer: " +
+        correctLetter;
+
+
+
+    /* Explanation */
+
+    document
+        .getElementById("explanationText")
+        .textContent =
+        currentQuestion.explanation;
+
+
+    document
+        .getElementById("explanation")
+        .classList
+        .add("show");
+
+
+
+    /* Hide reveal */
+
+    document
+        .getElementById("revealButton")
+        .style
+        .display =
+        "none";
+
+
+
+    /* Show next */
+
+    document
+        .getElementById("nextButton")
+        .style
+        .display =
+        "block";
+
+}
+
+
+
+/* =========================================================
+   NEXT STUDENT
+========================================================= */
+
+function goHome() {
+
+
+    document
+        .getElementById("questionScreen")
+        .classList
+        .remove("active");
+
+
+    document
+        .getElementById("home")
+        .classList
+        .add("active");
+
+
+    currentQuestion = null;
+
+}
+
+</script>
+
+</body>
+
+</html>
